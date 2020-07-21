@@ -1,0 +1,5 @@
+# Get token here https://vercel.com/account/tokens
+VERCEL_TOKEN=""
+
+# Your domain/subdomain
+DOMAIN_NAME=""
