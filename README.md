@@ -1,6 +1,6 @@
 # Vercel Dynamic DNS
 
-Script for exposing local server with Vercel DNS. It runs every 15 minutes, checking current IP address and updates DNS records for your domain.
+Script for exposing local server with [Vercel DNS](https://vercel.com/docs/custom-domains). It runs every 15 minutes, checking current IP address and updates DNS records for your domain.
 
 ## Installation
 
