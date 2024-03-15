@@ -1,5 +1,10 @@
-# Get token here https://vercel.com/account/tokens
+#!/bin/bash
+
+# Get the token from https://vercel.com/account/tokens
 VERCEL_TOKEN=""
 
-# Your domain/subdomain
+# Domain name (e.g. example.com)
 DOMAIN_NAME=""
+
+# Subdomain to update (note: use an empty string for the root record)
+SUBDOMAIN=""
