@@ -27,3 +27,46 @@ Updating IP: x.x.x.x
 Record for SUBDOMAIN already exists (id: rec_xxxxxxxxxxxxxxxxxxxxxxxx). Updating...
 🎉 Done!
 ```
+
+## Docker
+
+There is a dockerized version of `vercel-ddns` with `CRON`.
+
+Create 3 files in your directory:
+
+1. `Dockerfile`.
+2. `start.sh` - docker entry point
+3. `dns.config` - configuration for `vercel-ddns`.
+
+`Dockerfile`:
+
+```dockerfile
+FROM alpine:latest
+
+WORKDIR /root
+
+# Installing dependencies
+RUN apk --no-cache add dcron curl jq bash
+SHELL ["/bin/bash", "-c"]
+
+# Cloning config and start file
+COPY dns.config /root/dns.config
+COPY start.sh /root/start.sh
+
+# Cloning app
+RUN curl -o /root/dns-sync.sh https://raw.githubusercontent.com/iam-medvedev/vercel-ddns/master/dns-sync.sh
+RUN chmod +x /root/dns-sync.sh
+
+# Setting up cron
+RUN echo "*/30 * * * * /root/dns-sync.sh >> /var/log/dns-sync.log 2>&1" >> /etc/crontabs/root
+
+# Starting
+CMD ["bash", "/root/start.sh"]
+```
+
+`start.sh`:
+
+```sh
+# Performs the first sync and starts CRON
+bash /root/dns-sync.sh && crond -f
+```
